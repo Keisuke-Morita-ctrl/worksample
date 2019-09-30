@@ -1,0 +1,249 @@
+from keras.datasets import mnist
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+
+X_train = X_train.reshape(-1, 784)
+X_test = X_test.reshape(-1, 784)
+
+import matplotlib.pyplot as plt
+%matplotlib inline
+index = 0
+image = X_train[index].reshape(28,28)
+# X_train[index]: (784,)
+# image: (28, 28)
+plt.imshow(image, 'gray')
+plt.title('label : {}'.format(y_train[index]))
+plt.show()
+
+X_train = X_train.astype(np.float)
+X_test = X_test.astype(np.float)
+X_train /= 255
+X_test /= 255
+print(X_train.max()) # 1.0
+print(X_train.min()) # 0.0
+
+from sklearn.preprocessing import OneHotEncoder
+enc = OneHotEncoder(handle_unknown='ignore', sparse=False)
+y_train_one_hot = enc.fit_transform(y_train[:, np.newaxis])
+y_test_one_hot = enc.transform(y_test[:, np.newaxis])
+print(y_train.shape) # (60000,)
+print(y_train_one_hot.shape) # (60000, 10)
+print(y_train_one_hot.dtype) # float64
+
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2)
+
+
+
+class ScratchSimpleNeuralNetrowkClassifier():
+    """
+    シンプルな三層ニューラルネットワーク分類器
+
+    Parameters
+    ----------
+
+    Attributes
+    ----------
+    """
+
+    def __init__(self, verbose = True):
+        self.verbose = verbose
+        pass
+    def fit(self, X, y, X_val=None, y_val=None):
+        """
+        inneurons=X.reshape(X)
+        middle1neurons=y.reshape(X)
+        middle2neurons=n
+        
+         z(i)=np.dot(w.T,x(i))
+     　  z(i)=np.dot(W(i),A(i))
+         dz(i)=a(i)-y(i)
+         dw(i)+=np.dot(w(i),A(i))
+         b-=np.dot(db.dot
+         db+=dz(i)
+         
+         dw/=dw
+         
+         dw1+=np.dot(x(i),y(i))
+         dw2+=np.dot(x(i),y(i))
+         dw3+=np.dot(x(i),y(i))
+         db+=np..dot(x(i)
+         
+        ニューラルネットワーク分類器を学習する。
+
+        Parameters
+        ----------
+        X : 次の形のndarray, shape (n_samples, n_features)
+            学習用データの特徴量
+        y : 次の形のndarray, shape (n_samples, )
+            学習用データの正解値
+        X_val : 次の形のndarray, shape (n_samples, n_features)
+            検証用データの特徴量
+        y_val : 次の形のndarray, shape (n_samples, )
+            検証用データの正解値
+        """
+
+        if self.verbose:
+            #ver
+            
+            print()
+        pass
+
+
+    def predict(self, X):
+        """
+        ニューラルネットワーク分類器を使い推定する。
+
+        Parameters
+        ----------
+        X : 次の形のndarray, shape (n_samples, n_features)
+            サンプル
+
+        Returns
+        -------
+            次の形のndarray, shape (n_samples, 1)
+            推定結果
+        「」
+
+        pass
+        return
+        
+        
+        
+        
+        
+        
+        class GetMiniBatch:
+    """
+    ミニバッチを取得するイテレータ
+
+    Parameters
+    ----------
+    X : 次の形のndarray, shape (n_samples, n_features)
+      学習データ
+    y : 次の形のndarray, shape (n_samples, 1)
+      正解値
+    batch_size : int
+      バッチサイズ
+    seed : int
+      NumPyの乱数のシード
+    """
+    def __init__(self, X, y, batch_size = 20, seed=0):
+        self.batch_size = batch_size
+        np.random.seed(seed)
+        shuffle_index = np.random.permutation(np.arange(X.shape[0]))
+        self._X = X[shuffle_index]
+        self._y = y[shuffle_index]
+        self._stop = np.ceil(X.shape[0]/self.batch_size).astype(np.int)
+
+    def __len__(self):
+        return self._stop
+
+    def __getitem__(self,item):
+        p0 = item*self.batch_size
+        p1 = item*self.batch_size + self.batch_size
+        return self._X[p0:p1], self._y[p0:p1]        
+
+    def __iter__(self):
+        self._counter = 0
+        return self
+
+    def __next__(self):
+        if self._counter >= self._stop:
+            raise StopIteration()
+        p0 = self._counter*self.batch_size
+        p1 = self._counter*self.batch_size + self.batch_size
+        self._counter += 1
+        return self._X[p0:p1], self._y[p0:p1]
+        
+    def activation_function(self,x):
+      return 1/(1+np.exp(-x))
+      
+    def softmax(a):
+      c = np.max(a)
+      exp_a = np.exp(a - c)
+      sum_exp_a = np.sum(exp_a)
+      y = exp_a / sum_exp_a
+      return y
+      
+    def train(self,inputs_list,targets_list):
+      
+      A1=np.array(targets_list,ndmin=2).T
+      A2=np.array
+      
+      hidden_inputs=np.dot(self.w_h,inputs)
+      hidden_outputs=self.activation_function(hidden_inputs)
+      
+      
+       
+       
+n_features = 784
+n_nodes1 = 400
+sigma = 0.01 # ガウス分布の標準偏差
+W1 = sigma * np.random.randn(n_features, n_nodes1)
+W2 = sigma * np.random.randn(n_nodes1,n_nodes2)
+W3 = sigma * np.random.randn(n_nodes2,n_nodes3
+        
+def cee_logistic(q, x, t):
+    f = logistic(x, q)
+    c = - np.sum((t * np.log(f) + (1 - t) * np.log(1 - f)))
+    return c / len(f)
+      B1=np.array([])
+      
+      
+     
+     Z1=np.array(ndmin=2).T
+      targets=np.array(targets_list
+     
+     z(i)=np.dot(w.T,x(i))
+     Z(i)=np.dot(W(i),A(i)
+     dz(i)=a(i)-y(i)
+     dw(i)+=np.dot(w(i),A(i))
+     a(i)=sai
+     
+     dw1+=np.dot(x(i),y(i))
+     dw2+=np.dot(x(i),y(i))
+     dw3+=np.dot(x(i),y(i))
+     db+=dz(i)
+     
+     w1-=dw1
+     w2-=dw2
+     w3-=dw3
+      
+     dw1+ = *np.dot(
+     dw2+ = self.Ir*np.dot(
+     
+     ds
+  
+                   
+        
+        
+        
+        
+        
+        
+        
+        
+        語分類結果を並べて表示する。画像の上の表示は「推定結果/正解」である。
+
+Parameters:
+----------
+y_pred : 推定値のndarray (n_samples,)
+y_val : 検証用データの正解ラベル(n_samples,)
+X_val : 検証用データの特徴量（n_samples, n_features)
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+num = 36 # いくつ表示するか
+
+true_false = y_pred==y_val
+false_list = np.where(true_false==False)[0].astype(np.int)
+
+if false_list.shape[0] < num:
+    num = false_list.shape[0]
+fig = plt.figure(figsize=(6, 6))
+fig.subplots_adjust(left=0, right=0.8,  bottom=0, top=0.8, hspace=1, wspace=0.5)
+for i in range(num):
+    ax = fig.add_subplot(6, 6, i + 1, xticks=[], yticks=[])
+    ax.set_title("{} / {}".format(y_pred[false_list[i]],y_val[false_list[i]]))
+    ax.imshow(X_val.reshape(-1,28,28)[false_list[i]], cmap='gray')
